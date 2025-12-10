@@ -40,3 +40,21 @@ console.log(extractNumber('а я томат'));
 console.log(extractNumber(2023));
 console.log(extractNumber(-1));
 console.log(extractNumber(1.5));
+
+const isMeetingInWorkHours = (workStart, workEnd, meetingStart, duration) => {
+    const toMinutes = (timeStr) => {
+        const [hours, minutes] = timeStr.split(':');
+        return Number(hours) * 60 + Number(minutes);
+    }
+    const workStartMinutes = toMinutes(workStart);
+    const workEndMinutes = toMinutes(workEnd);
+    const meetingStartMinutes = toMinutes(meetingStart);
+    const meetingEndMinutes = meetingStartMinutes + duration;
+    return meetingStartMinutes >= workStartMinutes && meetingEndMinutes <= workEndMinutes;
+}
+
+console.log(isMeetingInWorkHours('08:00', '17:30', '14:00', 90));
+console.log(isMeetingInWorkHours('8:0', '10:0', '8:0', 120));
+console.log(isMeetingInWorkHours('08:00', '14:30', '14:00', 90));
+console.log(isMeetingInWorkHours('14:00', '17:30', '08:0', 90));
+console.log(isMeetingInWorkHours('8:00', '17:30', '08:00', 900));
