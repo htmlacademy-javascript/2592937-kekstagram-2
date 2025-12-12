@@ -1,5 +1,5 @@
 import { getRandomInteger, createIdGenerator } from "./utils";
-const MESSAGES = [
+ export const MESSAGES = [
     'Всё отлично!',
     'В целом всё неплохо. Но не всё.',
     'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
@@ -7,10 +7,10 @@ const MESSAGES = [
     'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
     'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
-const NAMES = [
+export const NAMES = [
     'Артём', 'Анна', 'Иван', 'Мария', 'Сергей', 'Елена', 'Дмитрий', 'Ольга', 'Алексей', 'Наталья'
 ];
-const PHOTO_DESCRIPTIONS = [
+export const PHOTO_DESCRIPTIONS = [
     'Кот спит на подоконнике',
     'Городские огни ночью',
     'Цветущая сакура весной',
@@ -37,39 +37,4 @@ const PHOTO_DESCRIPTIONS = [
     'Закат над океаном',
     'Утренний пейзаж в горах',
 ];
-const COUNT_PHOTOS = 25;
-const generateComment = (commentIdGenerator) => {
-    const id = commentIdGenerator();
-    const avatar = `img/avatar-${getRandomInteger(1, 6)}.svg`;
-    let message;
-    if (getRandomInteger(1, 2) === 1) {
-        message = MESSAGES[getRandomInteger(0, MESSAGES.length - 1)];
-    } else {
-        const firstIndex = getRandomInteger(0, MESSAGES.length - 1);
-        let secondIndex = getRandomInteger(0, MESSAGES.length - 1);
-        while (secondIndex === firstIndex) {
-            secondIndex = getRandomInteger(0, MESSAGES.length - 1);
-        }
-        message = `${MESSAGES[firstIndex]} ${MESSAGES[secondIndex]}`;
-    }
-    const name = NAMES[getRandomInteger(0, NAMES.length - 1)];
-    return {id, avatar, message, name};
-}
-export const generatePhotos = () => {
-    const commentIdGenerator = createIdGenerator();
-    return Array.from(
-        { length: COUNT_PHOTOS },
-        (_, index) => {
-        const id = index + 1;
-        const url = `photos/${index + 1}.jpg`;
-        const description = PHOTO_DESCRIPTIONS[index];
-        const likes = getRandomInteger(15, 200);
-        const commentsCount = getRandomInteger(0, 30);
-        const comments = Array.from(
-            { length: commentsCount },
-            () => generateComment(commentIdGenerator)
-        );
-        return { id, url, description, likes, comments };
-        }
-    );
-}
+export const COUNT_PHOTOS = 25;
