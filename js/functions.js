@@ -1,25 +1,25 @@
 const checkStringLength = (str, maxLength) => str.length <= maxLength;
 
 function isPalindrome(str) {
-    const normalizedStr = str.replaceAll(' ', '').toLowerCase();
-    const reversedStr = normalizedStr.split('').reverse().join('');
-    return normalizedStr === reversedStr;
+  const normalizedStr = str.replaceAll(' ', '').toLowerCase();
+  const reversedStr = normalizedStr.split('').reverse().join('');
+  return normalizedStr === reversedStr;
 }
 
 function extractNumber(str) {
-    const string = str.toString();
-    let result = '';
-    for (let i =0; i < string.length; i++) {
-        const char = string[i];
-        const digit = parseInt(char, 10);
-        if (!Number.isNaN(digit)) {
-            result += char;
-        }
+  const string = str.toString();
+  let result = '';
+  for (let i = 0; i < string.length; i++) {
+    const char = string[i];
+    const digit = parseInt(char, 10);
+    if (!Number.isNaN(digit)) {
+      result += char;
     }
-    if (result === '') {
-        return NaN;
-    }
-    return parseInt(result, 10);
+  }
+  if (result === '') {
+    return NaN;
+  }
+  return parseInt(result, 10);
 }
 
 console.log(checkStringLength('проверяемая строка', 20));
@@ -42,16 +42,16 @@ console.log(extractNumber(-1));
 console.log(extractNumber(1.5));
 
 const isMeetingInWorkHours = (workStart, workEnd, meetingStart, duration) => {
-    const toMinutes = (timeStr) => {
-        const [hours, minutes] = timeStr.split(':');
-        return Number(hours) * 60 + Number(minutes);
-    }
-    const workStartMinutes = toMinutes(workStart);
-    const workEndMinutes = toMinutes(workEnd);
-    const meetingStartMinutes = toMinutes(meetingStart);
-    const meetingEndMinutes = meetingStartMinutes + duration;
-    return meetingStartMinutes >= workStartMinutes && meetingEndMinutes <= workEndMinutes;
-}
+  const toMinutes = (timeStr) => {
+    const [hours, minutes] = timeStr.split(':');
+    return Number(hours) * 60 + Number(minutes);
+  };
+  const workStartMinutes = toMinutes(workStart);
+  const workEndMinutes = toMinutes(workEnd);
+  const meetingStartMinutes = toMinutes(meetingStart);
+  const meetingEndMinutes = meetingStartMinutes + duration;
+  return meetingStartMinutes >= workStartMinutes && meetingEndMinutes <= workEndMinutes;
+};
 
 console.log(isMeetingInWorkHours('08:00', '17:30', '14:00', 90));
 console.log(isMeetingInWorkHours('8:0', '10:0', '8:0', 120));

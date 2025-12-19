@@ -1,3 +1,4 @@
-import { generatePhotos } from "./mock";
+import { generatePhotos } from './mock';
+import { renderPitures } from './gallery';
 const photos = generatePhotos();
-console.log(photos);
+renderPitures(photos);
