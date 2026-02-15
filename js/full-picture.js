@@ -1,3 +1,5 @@
+import { isEscapeKey } from "./utils";
+
 const createCommentElement = (comment) => {
   const commentElement = document.createElement('li');
   commentElement.classList.add('social__comment');
@@ -15,8 +17,6 @@ const createCommentElement = (comment) => {
   return commentElement;
 };
 
-let currentComments = [];
-let shownCommentsCount = 0;
 const COMMENTS_PER_LOAD = 5;
 
 const renderCommentsBatch = (container) => {
@@ -49,7 +49,7 @@ const showModalElements = (fullSizeOverlay) => {
 };
 
 const onDocumentKeydown = (evt) => {
-  if (evt.key === 'Escape') {
+  if (isEscapeKey(evt)) {
     evt.preventDefault();
     closeFullSizeModal();
   }
@@ -137,5 +137,8 @@ const openFullSize = (photo) => {
 
   setupModalListeners(closeButton, loaderButton, commentsContainer, commentsShownCountElement, commentsTotalCountElement);
 };
+
+let currentComments = [];
+let shownCommentsCount = 0;
 
 export { openFullSize };
