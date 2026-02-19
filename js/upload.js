@@ -63,7 +63,7 @@ const createSlider = () => {
     },
     step: EFFECTS[currentEffect].step,
     format: {
-      to: value => Number(value).toFixed(2),
+      to: (value) => Number(value).toFixed(2),
       from: Number
     }
   });
@@ -214,7 +214,6 @@ const onDocumentKeydown = (evt) => {
       evt.stopPropagation();
       return;
     }
-
     evt.preventDefault();
     closePhotoEditor();
   }
@@ -223,19 +222,15 @@ const onDocumentKeydown = (evt) => {
 const onUploadFileControlChange = () => {
   photoEditorForm.classList.remove('hidden');
   pageBody.classList.add('modal-open');
-
   scaleManager.reset();
   applyEffect('none');
-
   photoEditorResetButton.addEventListener('click', onPhotoEditorResetBtnClick);
   document.addEventListener('keydown', onDocumentKeydown);
 };
 
 const onUploadFormSubmit = (evt) => {
   evt.preventDefault();
-
   const isValid = pristine.validate();
-
   if (isValid) {
     console.log('Форма валидна, можно отправлять');
   } else {
@@ -247,7 +242,7 @@ export const initUploadModal = () => {
   pristine.addValidator(hashtagInput, validateHashtags, getHashtagErrorMessage, 1, false);
   pristine.addValidator(commentInput, validateComment, getCommentErrorMessage, 1, false);
 
-  document.querySelectorAll('.effects__radio').forEach(radio => {
+  document.querySelectorAll('.effects__radio').forEach((radio) => {
     radio.addEventListener('change', (e) => {
       applyEffect(e.target.value);
     });
