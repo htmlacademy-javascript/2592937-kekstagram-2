@@ -1,4 +1,7 @@
-import { isEscapeKey } from "./utils";
+import { isEscapeKey } from './utils.js';
+
+let currentComments = [];
+let shownCommentsCount = 0;
 
 const createCommentElement = (comment) => {
   const commentElement = document.createElement('li');
@@ -137,8 +140,5 @@ const openFullSize = (photo) => {
 
   setupModalListeners(closeButton, loaderButton, commentsContainer, commentsShownCountElement, commentsTotalCountElement);
 };
-
-let currentComments = [];
-let shownCommentsCount = 0;
 
 export { openFullSize };
