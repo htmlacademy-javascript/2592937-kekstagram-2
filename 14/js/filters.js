@@ -49,7 +49,13 @@ const setActiveFilter = (activeButton) => {
   activeButton.classList.add('img-filters__button--active');
 };
 
-const onFilterClick = debounce((evt) => {
+const updatePictures = () => {
+  renderPictures(getFilteredPhotos());
+}
+
+const debouncedUpdatePictures = debounce(updatePictures, 500);
+
+const onFilterClick = ((evt) => {
   if (!evt.target.classList.contains('img-filters__button')) {
     return;
   }
@@ -64,9 +70,9 @@ const onFilterClick = debounce((evt) => {
   if (newFilter && newFilter !== currentFilter) {
     currentFilter = newFilter;
     setActiveFilter(evt.target);
-    renderPictures(getFilteredPhotos());
+    debouncedUpdatePictures();
   }
-}, 500);
+});
 
 const init = (loadedPhotos) => {
   photos = loadedPhotos;
