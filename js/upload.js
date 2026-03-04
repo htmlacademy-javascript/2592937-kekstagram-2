@@ -12,7 +12,8 @@ const pristine = new Pristine(uploadForm, {
   classTo: 'img-upload__field-wrapper',
   errorClass: 'img-upload__field-wrapper--error',
   errorTextParent: 'img-upload__field-wrapper',
-  errorTextTag: 'span',
+  errorTextTag: 'div',
+  errorTextClass: 'img-upload__field-wrapper--error-text',
 }, true);
 
 setPristine(pristine);
