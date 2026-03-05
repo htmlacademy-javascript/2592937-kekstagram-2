@@ -6,9 +6,6 @@ const FILTERS_COUNT = {
 };
 
 const filtersContainer = document.querySelector('.img-filters');
-const filterDefault = document.querySelector('#filter-default');
-const filterRandom = document.querySelector('#filter-random');
-const filterDiscussed = document.querySelector('#filter-discussed');
 
 let currentFilter = 'default';
 let photos = [];
