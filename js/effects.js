@@ -10,6 +10,7 @@ const EFFECTS = {
 const effectLevelContainer = document.querySelector('.img-upload__effect-level');
 const effectLevelValue = document.querySelector('.effect-level__value');
 const previewImage = document.querySelector('.img-upload__preview img');
+const effectsList = document.querySelector('.effects__list');
 
 let currentEffect = 'none';
 let slider = null;
@@ -47,19 +48,18 @@ const createSlider = () => {
 
 const applyEffect = (effectName) => {
   currentEffect = effectName;
-  previewImage.className = '';
-  if (effectName !== 'none') {
-    previewImage.classList.add(`effects__preview--${effectName}`);
-  }
   if (effectName === 'none') {
+    previewImage.className = '';
     effectLevelContainer.classList.add('hidden');
     previewImage.style.filter = '';
     effectLevelValue.value = '';
+
     if (slider) {
       slider.destroy();
       slider = null;
     }
   } else {
+    previewImage.className = `effects__preview--${effectName}`;
     effectLevelContainer.classList.remove('hidden');
     createSlider();
   }
@@ -70,10 +70,10 @@ const reset = () => {
 };
 
 const init = () => {
-  document.querySelectorAll('.effects__radio').forEach((radio) => {
-    radio.addEventListener('change', (e) => {
-      applyEffect(e.target.value);
-    });
+  effectsList.addEventListener('change', (evt) => {
+    if (evt.target.matches('.effects__radio')) {
+      applyEffect(evt.target.value);
+    }
   });
 };
 

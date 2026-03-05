@@ -11,6 +11,8 @@ const hashtagInput = uploadForm.querySelector('.text__hashtags');
 const commentInput = uploadForm.querySelector('.text__description');
 const previewImage = document.querySelector('.img-upload__preview img');
 
+let pristine = null;
+
 const setPristine = (instance) => {
   pristine = instance;
 };
@@ -56,7 +58,5 @@ const openPhotoEditor = () => {
 const init = () => {
   uploadFileControl.addEventListener('change', openPhotoEditor);
 };
-
-let pristine = null;
 
 export { init, closePhotoEditor, setPristine };
