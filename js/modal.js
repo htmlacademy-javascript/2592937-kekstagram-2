@@ -1,6 +1,7 @@
 import { isEscapeKey } from './utils.js';
 import { reset as resetScale } from './scale.js';
 import { reset as resetEffects } from './effects.js';
+import { clearPreview } from './upload.js';
 
 const uploadForm = document.querySelector('.img-upload__form');
 const pageBody = document.querySelector('body');
@@ -17,32 +18,43 @@ const setPristine = (instance) => {
   pristine = instance;
 };
 
-const closePhotoEditor = () => {
+const api = {
+  close: null,
+  onPhotoEditorResetBtnClick: null,
+  onDocumentKeydown: null,
+};
+
+api.close = () => {
   photoEditorForm.classList.add('hidden');
   pageBody.classList.remove('modal-open');
-  document.removeEventListener('keydown', onDocumentKeydown);
-  photoEditorResetButton.removeEventListener('click', onPhotoEditorResetBtnClick);
+  document.removeEventListener('keydown', api.onDocumentKeydown);
+  photoEditorResetButton.removeEventListener('click', api.onPhotoEditorResetBtnClick);
   uploadForm.reset();
   uploadFileControl.value = '';
   pristine?.reset();
   resetScale();
   resetEffects();
-  previewImage.style.filter = '';
+  previewImage.computedStyleMap.filter = '';
   previewImage.className = '';
+  clearPreview();
 };
 
-const onPhotoEditorResetBtnClick = () => {
-  closePhotoEditor();
+api.onPhotoEditorResetBtnClick = () => {
+  api.close();
 };
 
-const onDocumentKeydown = (evt) => {
+api.onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
+    if (document.querySelector('.error') || document.querySelector('.success')) {
+      return;
+    }
+
     if (document.activeElement === hashtagInput || document.activeElement === commentInput) {
       evt.stopPropagation();
       return;
     }
     evt.preventDefault();
-    closePhotoEditor();
+    api.close();
   }
 };
 
@@ -51,12 +63,13 @@ const openPhotoEditor = () => {
   pageBody.classList.add('modal-open');
   resetScale();
   resetEffects();
-  photoEditorResetButton.addEventListener('click', onPhotoEditorResetBtnClick);
-  document.addEventListener('keydown', onDocumentKeydown);
+  photoEditorResetButton.addEventListener('click', api.onPhotoEditorResetBtnClick);
+  document.addEventListener('keydown', api.onDocumentKeydown);
 };
 
 const init = () => {
   uploadFileControl.addEventListener('change', openPhotoEditor);
 };
 
+const closePhotoEditor = api.close;
 export { init, closePhotoEditor, setPristine };

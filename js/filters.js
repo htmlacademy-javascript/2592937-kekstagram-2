@@ -1,14 +1,11 @@
-import { debounce, getRandomInteger } from "./utils.js";
-import { renderPictures } from "./gallery.js";
+import { debounce, getRandomInteger } from './utils.js';
+import { renderPictures } from './gallery.js';
 
 const FILTERS_COUNT = {
   RANDOM: 10,
 };
 
 const filtersContainer = document.querySelector('.img-filters');
-const filterDefault = document.querySelector('#filter-default');
-const filterRandom = document.querySelector('#filter-random');
-const filterDiscussed = document.querySelector('#filter-discussed');
 
 let currentFilter = 'default';
 let photos = [];
@@ -49,7 +46,13 @@ const setActiveFilter = (activeButton) => {
   activeButton.classList.add('img-filters__button--active');
 };
 
-const onFilterClick = debounce((evt) => {
+const updatePictures = () => {
+  renderPictures(getFilteredPhotos());
+};
+
+const debouncedUpdatePictures = debounce(updatePictures, 500);
+
+const onFilterClick = ((evt) => {
   if (!evt.target.classList.contains('img-filters__button')) {
     return;
   }
@@ -64,14 +67,14 @@ const onFilterClick = debounce((evt) => {
   if (newFilter && newFilter !== currentFilter) {
     currentFilter = newFilter;
     setActiveFilter(evt.target);
-    renderPictures(getFilteredPhotos());
+    debouncedUpdatePictures();
   }
-}, 500);
+});
 
-const init = (loadedPhotos) => {
+const initFilters = (loadedPhotos) => {
   photos = loadedPhotos;
   filtersContainer.classList.remove('img-filters--inactive');
   filtersContainer.addEventListener('click', onFilterClick);
 };
 
-export { init };
+export { initFilters };
