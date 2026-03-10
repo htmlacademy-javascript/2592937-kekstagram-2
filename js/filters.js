@@ -1,5 +1,5 @@
-import { debounce, getRandomInteger } from "./utils.js";
-import { renderPictures } from "./gallery.js";
+import { debounce, getRandomInteger } from './utils.js';
+import { renderPictures } from './gallery.js';
 
 const FILTERS_COUNT = {
   RANDOM: 10,
@@ -48,7 +48,7 @@ const setActiveFilter = (activeButton) => {
 
 const updatePictures = () => {
   renderPictures(getFilteredPhotos());
-}
+};
 
 const debouncedUpdatePictures = debounce(updatePictures, 500);
 
@@ -71,10 +71,10 @@ const onFilterClick = ((evt) => {
   }
 });
 
-const init = (loadedPhotos) => {
+const initFilters = (loadedPhotos) => {
   photos = loadedPhotos;
   filtersContainer.classList.remove('img-filters--inactive');
   filtersContainer.addEventListener('click', onFilterClick);
 };
 
-export { init };
+export { initFilters };

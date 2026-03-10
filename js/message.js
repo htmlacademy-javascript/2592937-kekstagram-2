@@ -12,20 +12,22 @@ const showMessage = (templateSelector) => {
     return;
   }
 
+  const api = { remove: null };
+
   const onDocumentKeydown = (evt) => {
     if (isEscapeKey(evt)) {
       evt.preventDefault();
-      removeMessage();
+      api.remove?.();
     }
   };
 
   const onOutsideClick = (evt) => {
     if (evt.target === message) {
-      removeMessage();
+      api.remove?.();
     }
   };
 
-  const removeMessage = () => {
+  api.remove = () => {
     message.remove();
     document.removeEventListener('keydown', onDocumentKeydown);
     document.removeEventListener('click', onOutsideClick);
@@ -33,7 +35,7 @@ const showMessage = (templateSelector) => {
 
   const button = message.querySelector('.success__button, .error__button');
   if (button) {
-    button.addEventListener('click', removeMessage);
+    button.addEventListener('click', api.remove);
   }
   document.addEventListener('keydown', onDocumentKeydown);
   document.addEventListener('click', onOutsideClick);
