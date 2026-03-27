@@ -53,7 +53,8 @@ const updatePictures = () => {
 const debouncedUpdatePictures = debounce(updatePictures, 500);
 
 const onFilterClick = ((evt) => {
-  if (!evt.target.classList.contains('img-filters__button')) {
+  const button = evt.target.closest('.img-filters__button');
+  if (!button) {
     return;
   }
 
@@ -66,7 +67,7 @@ const onFilterClick = ((evt) => {
   const newFilter = filterMap[evt.target.id];
   if (newFilter && newFilter !== currentFilter) {
     currentFilter = newFilter;
-    setActiveFilter(evt.target);
+    setActiveFilter(button);
     debouncedUpdatePictures();
   }
 });
