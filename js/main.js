@@ -1,7 +1,7 @@
 import { renderPictures } from './gallery.js';
 import { initUploadModal } from './upload.js';
 import { getData } from './api.js';
-import { showErrorMessage, showDataError } from './message.js';
+import { showDataError } from './message.js';
 import { initFilters } from './filters.js';
 
 initUploadModal();

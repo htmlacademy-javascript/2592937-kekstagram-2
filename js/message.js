@@ -53,6 +53,6 @@ const showDataError = () => {
   dataError.classList.add('data-error');
   dataError.textContent = 'Не удалось загрузить данные. Попробуйте обновить страницу';
   document.body.appendChild(dataError);
-}
+};
 
 export { showSuccessMessage, showErrorMessage, showDataError };
