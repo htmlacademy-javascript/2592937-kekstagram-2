@@ -3,11 +3,12 @@ const EFFECTS = {
   chrome: { filter: 'grayscale', min: 0, max: 1, step: 0.1, unit: '', start: 1 },
   sepia: { filter: 'sepia', min: 0, max: 1, step: 0.1, unit: '', start: 1 },
   marvin: { filter: 'invert', min: 0, max: 100, step: 1, unit: '%', start: 100 },
-  phobos: { filter: 'blur', min: 0, max: 3, step: 0.1, unit: 'px', start: 0 },
-  heat: { filter: 'brightness', min: 1, max: 3, step: 0.1, unit: '', start: 1 }
+  phobos: { filter: 'blur', min: 0, max: 3, step: 0.1, unit: 'px', start: 3 },
+  heat: { filter: 'brightness', min: 1, max: 3, step: 0.1, unit: '', start: 3 }
 };
 
 const effectLevelContainer = document.querySelector('.img-upload__effect-level');
+const effectLevelSlider = document.querySelector('.effect-level__slider');
 const effectLevelValue = document.querySelector('.effect-level__value');
 const previewImage = document.querySelector('.img-upload__preview img');
 const effectsList = document.querySelector('.effects__list');
@@ -22,12 +23,18 @@ const applyIntensity = (value) => {
 };
 
 const createSlider = () => {
+  if (!effectLevelSlider || typeof noUiSlider === 'undefined') {
+    return;
+  }
+
   if (slider) {
     slider.destroy();
     slider = null;
   }
-  effectLevelContainer.innerHTML = '';
-  noUiSlider.create(effectLevelContainer, {
+
+  effectLevelSlider.innerHTML = '';
+
+  noUiSlider.create(effectLevelSlider, {
     start: EFFECTS[currentEffect].start,
     range: {
       'min': EFFECTS[currentEffect].min,
@@ -39,8 +46,9 @@ const createSlider = () => {
       from: Number
     }
   });
-  slider = effectLevelContainer.noUiSlider;
+  slider = effectLevelSlider.noUiSlider;
   applyIntensity(EFFECTS[currentEffect].start);
+
   slider.on('update', (values) => {
     applyIntensity(parseFloat(values[0]));
   });

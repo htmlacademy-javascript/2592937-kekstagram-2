@@ -26,18 +26,20 @@ const getHashtagValidationError = (value) => {
     }
     seen.add(lower);
 
-    if (!HASHTAG_PATTERN.test(tag)) {
-      if (tag === '#') {
-        return 'Хэштег не может состоять только из решётки';
-      }
-      if (!/^#/.test(tag)) {
-        return 'Хэштег должен начинаться с символа #';
-      }
-      return 'Хэштег может содержать только буквы и цифры';
+    if (tag === '#') {
+      return 'Хэштег не может состоять только из решётки';
+    }
+
+    if (!tag.startsWith('#')) {
+      return 'Хэштег должен начинаться с символа #';
     }
 
     if (tag.length > MAX_HASHTAG_LENGTH) {
       return `Максимальная длина хэштега - ${MAX_HASHTAG_LENGTH} символов (включая #)`;
+    }
+
+    if (!HASHTAG_PATTERN.test(tag)) {
+      return 'Хэштег может содержать только буквы и цифры';
     }
   }
   return '';
