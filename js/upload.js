@@ -10,6 +10,7 @@ const submitButton = uploadForm.querySelector('.img-upload__submit');
 const uploadFileControl = uploadForm.querySelector('#upload-file');
 const previewImage = document.querySelector('.img-upload__preview img');
 const effectLevelValue = document.querySelector('.effect-level__value');
+const effectsPreviews = document.querySelectorAll('.effects__preview');
 
 const pristine = new Pristine(uploadForm, {
   classTo: 'img-upload__field-wrapper',
@@ -21,11 +22,26 @@ const pristine = new Pristine(uploadForm, {
 
 setPristine(pristine);
 
+const updateEffectsPreviews = (file) => {
+  const objectUrl = URL.createObjectURL(file);
+  effectsPreviews.forEach((preview) => {
+    preview.style.backgroundImage = `url(${objectUrl})`;
+  });
+
+  previewImage.dataset.objectUrl = objectUrl;
+};
+
+const clearEffectsPreviews = () => {
+  effectsPreviews.forEach((preview) => {
+    preview.style.backgroundImage = '';
+  });
+};
+
 const showPreview = (file) => {
   const objectUrl = URL.createObjectURL(file);
   previewImage.src = objectUrl;
-
-  previewImage.datast.objectUrl = objectUrl;
+  updateEffectsPreviews(file);
+  previewImage.dataset.objectUrl = objectUrl;
 };
 
 const clearPreview = () => {
@@ -35,6 +51,7 @@ const clearPreview = () => {
   }
   previewImage.src = 'img/upload-default-image.jpg';
   effectLevelValue.value = '';
+  clearEffectsPreviews();
 };
 
 const onUploadFormSubmit = (evt) => {
