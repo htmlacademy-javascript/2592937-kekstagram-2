@@ -1,5 +1,8 @@
 import { openFullSize } from './full-picture.js';
 
+const picturesContainer = document.querySelector('.pictures');
+const pictureTemplate = document.querySelector('#picture');
+
 const handlePictureClick = (evt) => {
   const pictureElement = evt.target.closest('.picture');
 
@@ -18,14 +21,13 @@ const handlePictureClick = (evt) => {
 };
 
 const renderPictures = (photos) => {
-  const container = document.querySelector('.pictures');
   const fragment = document.createDocumentFragment();
-  const template = document.querySelector('#picture');
+  const template = pictureTemplate;
 
-  const oldPictures = container.querySelectorAll('.picture');
+  const oldPictures = picturesContainer.querySelectorAll('.picture');
   oldPictures.forEach((picture) => picture.remove());
 
-  container.removeEventListener('click', handlePictureClick);
+  picturesContainer.removeEventListener('click', handlePictureClick);
 
   photos.forEach((photo, index) => {
     const pictureElement = template.content.cloneNode(true);
@@ -43,9 +45,9 @@ const renderPictures = (photos) => {
     fragment.appendChild(pictureElement);
   });
 
-  container.appendChild(fragment);
-  container.photos = photos;
-  container.addEventListener('click', handlePictureClick);
+  picturesContainer.appendChild(fragment);
+  picturesContainer.photos = photos;
+  picturesContainer.addEventListener('click', handlePictureClick);
 };
 
 export { renderPictures };
