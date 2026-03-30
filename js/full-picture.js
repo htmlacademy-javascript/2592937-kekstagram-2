@@ -3,6 +3,8 @@ import { isEscapeKey } from './utils.js';
 let currentComments = [];
 let shownCommentsCount = 0;
 
+const COMMENTS_PER_LOAD = 5;
+
 const createCommentElement = (comment) => {
   const commentElement = document.createElement('li');
   commentElement.classList.add('social__comment');
@@ -19,8 +21,6 @@ const createCommentElement = (comment) => {
   commentElement.appendChild(text);
   return commentElement;
 };
-
-const COMMENTS_PER_LOAD = 5;
 
 const renderCommentsBatch = (container) => {
   const fragment = document.createDocumentFragment();
