@@ -1,9 +1,9 @@
 import { isEscapeKey } from './utils.js';
 
+const COMMENTS_PER_LOAD = 5;
+
 let currentComments = [];
 let shownCommentsCount = 0;
-
-const COMMENTS_PER_LOAD = 5;
 
 const createCommentElement = (comment) => {
   const commentElement = document.createElement('li');

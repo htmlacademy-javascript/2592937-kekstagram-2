@@ -5,6 +5,8 @@ const FILTERS_COUNT = {
   RANDOM: 10,
 };
 
+const DEBOUNCE_DELAY = 500;
+
 const filtersContainer = document.querySelector('.img-filters');
 
 let currentFilter = 'default';
@@ -13,19 +15,19 @@ let photos = [];
 const sortByComments = (photoA, photoB) => photoB.comments.length - photoA.comments.length;
 
 const getRandomPhotos = (items) => {
-  const result = [];
+  const results = [];
   const indices = new Set();
   const maxCount = Math.min(FILTERS_COUNT.RANDOM, items.length);
 
-  while (result.length < maxCount) {
+  while (results.length < maxCount) {
     const index = getRandomInteger(0, items.length - 1);
     if (!indices.has(index)) {
-      result.push(items[index]);
+      results.push(items[index]);
       indices.add(index);
     }
   }
 
-  return result;
+  return results;
 };
 
 const getFilteredPhotos = () => {
@@ -50,7 +52,7 @@ const updatePictures = () => {
   renderPictures(getFilteredPhotos());
 };
 
-const debouncedUpdatePictures = debounce(updatePictures, 500);
+const debouncedUpdatePictures = debounce(updatePictures, DEBOUNCE_DELAY);
 
 const onFilterClick = ((evt) => {
   const button = evt.target.closest('.img-filters__button');
